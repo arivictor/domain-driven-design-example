@@ -1,49 +1,25 @@
 # domain-driven-design-example
 
-my_app/
-  ├── src/
-  │   ├── domain/
-  │   │   ├── domain1/
-  │   │   │   ├── entities.py
-  │   │   │   ├── services.py
-  │   │   │   └── value_objects.py
-  │   │   ├── domain2/
-  │   │   │   ├── entities.py
-  │   │   │   ├── services.py
-  │   │   │   └── value_objects.py
-  │   │   └── __init__.py
-  │   ├── application/
-  │   │   ├── domain1/
-  │   │   │   ├── commands.py
-  │   │   │   ├── queries.py
-  │   │   │   └── use_cases.py
-  │   │   ├── domain2/
-  │   │   │   ├── commands.py
-  │   │   │   ├── queries.py
-  │   │   │   └── use_cases.py
-  │   │   └── __init__.py
-  │   ├── infrastructure/
-  │   │   ├── database/
-  │   │   │   ├── repositories.py
-  │   │   │   └── models.py
-  │   │   ├── messaging/
-  │   │   │   └── celery_app.py
-  │   │   ├── external_apis/
-  │   │   ├── config.py
-  │   │   └── __init__.py
-  │   ├── interfaces/
-  │   │   ├── http_api/
-  │   │   │   ├── fastapi_app.py
-  │   │   │   └── routers/
-  │   │   ├── cli/
-  │   │   └── __init__.py
-  │   └── __init__.py
-  ├── workers/
-  │   ├── celery_tasks.py
-  │   └── __init__.py
-  ├── tests/
-  │   ├── unit/
-  │   ├── integration/
-  │   └── __init__.py
-  ├── requirements.txt
-  └── README.md
+```
+.
+├── application                 # Exposes domain logic
+│   └── book
+│       ├── command.py          # Schemas for things we want to do
+│       ├── event.py            # Schemas for events
+│       ├── event_bus.py        # Manages events
+│       ├── query.py            # Schemas for things we want to ask
+│       ├── service.py          # Interacts with domain
+│       └── use_case.py         # Executes commands and queries
+├── domain
+│   └── book
+│       ├── entity.py           # The dataclasses of things we track
+│       ├── event.py            # Schemas for events
+│       ├── repository.py       # Abstract repository
+│       └── value_object.py     # dataclases of things we don't track
+├── infrastructure
+│   └── book
+│       ├── event_handler.py    # Functions to handle events from the domain
+│       └── repository.py       # Implements the repository (SQLite3, In-memeory, etc)
+└── interface
+    └── main.py                 # Where we compose our service (CLI, API, etc)
+```
