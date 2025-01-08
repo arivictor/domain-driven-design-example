@@ -32,7 +32,13 @@ class BookService:
             isbn=isbn,
             publication_date=publication_date,
         )
-        self.book_repository.save(book)
+        self.book_repository.begin()
+        try:
+            self.book_repository.save(book)
+            self.book_repository.commit()
+        except Exception:
+            self.book_repository.rollback()
+            raise
 
         event = application.book.event.BookAdded(title=book.title, author=book.author)
         self.event_bus.publish(event)

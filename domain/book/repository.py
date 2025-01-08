@@ -4,7 +4,21 @@ from typing import List, Optional
 import domain.book.entity
 
 
-class BookRepository(ABC):
+class UnitOfWork(ABC):
+    @abstractmethod
+    def begin(self):
+        pass
+
+    @abstractmethod
+    def commit(self):
+        pass
+
+    @abstractmethod
+    def rollback(self):
+        pass
+
+
+class BookRepository(UnitOfWork, ABC):
     @abstractmethod
     def save(self, book: domain.book.entity.Book):
         pass
